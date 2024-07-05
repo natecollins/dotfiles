@@ -1,0 +1,9 @@
+# IGNORE THE FREAKING JQUERY FILES!!!
+--ignore-file=match:/^jquery.*\.js$/
+--ignore-file=match:/^jquery.*\.css$/
+# Other annoying files
+--ignore-file=match:/.*\.min.js$/
+--ignore-file=match:/.*\.min.css$/
+--ignore-file=match:/.*\.cache$/
+--ignore-dir=.phpstan_cache
+--ignore-dir=__pycache__

@@ -1,0 +1,93 @@
+" Vundle Config ==============
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" List plugins here !!!
+Plugin 'L9'
+Plugin 'dbext.vim'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'https://github.com/nacitar/a.vim.git'       " updated a.vim
+Plugin 'https://github.com/cwoac/nvim.git'
+Plugin 'wincent/command-t'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'hashivim/vim-terraform'
+Plugin 'psf/black'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+"filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" Disable YCM preview
+set completeopt-=preview
+" Disable confirmation for loding .ycm_extra_conf.py
+let g:ycm_confirm_extra_conf = 0
+" Disable auto-folding of vim-markdown
+let g:vim_markdown_folding_disabled = 1
+
+" Custom config =========================
+"set t_Co=256
+syntax on
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set autoindent
+set hlsearch
+set noincsearch
+set scrolloff=8
+set tabpagemax=40
+set hidden   " don't require buffers to be saved when switching to another
+
+" Sane filename tab completion
+set wildmode=longest,list
+"set wildmode=longest,list,full
+"set wildmenu
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
+" Autocomplete colors
+colorscheme ron
+
+" Use :find to open files in current dir and any subdir
+set path=$PWD/**
+
+" Highlight lines that are overly long
+"highlight OverLength ctermbg=magenta ctermfg=white
+"match OverLength /\%101v.\+/
+
+" Tab navigation
+noremap <C-k> :tabnext<CR>
+noremap <C-s> :tabprevious<CR>
+inoremap <C-k> <Esc>:tabnext<CR>i
+inoremap <C-s> <Esc>:tabprevious<CR>i
+" Move up/down based on visual display, not line
+" NOTE: Insert mode remap not compatiable with YCM
+"noremap <Up> gk
+"noremap <Down> gj
+"inoremap <Up> <C-o>gk
+"inoremap <Down> <C-o>gj
+"vnoremap <Up> gk
+"vnoremap <Down> gj

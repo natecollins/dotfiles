@@ -1,0 +1,14 @@
+[user]
+	name = Nathan Collins
+	email = colli372@msu.edu
+[core]
+	editor = vim
+	autocrlf = input
+[color]
+	ui = true
+[push]
+	default = simple
+[safe]
+	directory = *
+[init]
+	defaultBranch = master

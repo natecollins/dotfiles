@@ -1,0 +1,103 @@
+
+# history length; see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=500000
+HISTFILESIZE=1000000
+
+PROMPT_COMMAND=_promptcommand
+
+_promptcommand() {
+declare RC=$?
+# If color prompt supported
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    BLACK='\e[0;30m'
+    BLUE='\e[0;34m'
+    BROWN='\e[0;33m'
+    CYAN='\e[0;36m'
+    GRAY='\e[1;30m'
+    GREEN='\e[0;32m'
+    PURPLE='\e[0;35m'
+    RED='\e[0;31m'
+    WHITE='\e[1:37m'
+    YELLOW='\e[1;33m'
+    LBLUE='\e[1;34m'
+    LCYAN='\e[1;36m'
+    LGRAY='\e[0;37m'
+    LGREEN='\e[1;32m'
+    LPURPLE='\e[1;35m'
+    LRED='\e[1;31m'
+    BOLD='\e[1m'
+    RESET='\e[0m'
+
+    declare -a POST_PWD_ARR
+    declare SHOW_AT_SHLVL=2
+    # TODO git status
+    if [ -n "$SSH_CONNECTION" ]; then
+        POST_PWD_ARR+=("\[${GRAY}\]ssh\[${RESET}\]")
+    fi
+    if [ "$EUID" -eq 0 ]; then
+        ((SHOW_AT_SHLVL += 1))
+    fi
+    if [ -n "$VIMRUNTIME" ]; then
+        ((SHOW_AT_SHLVL += 1))
+        POST_PWD_ARR+=("\[${LPURPLE}\]vim\[${RESET}\]")
+    fi
+    if [ "$SHLVL" -ge "$SHOW_AT_SHLVL" ]; then
+        POST_PWD_ARR+=("\[${YELLOW}\]+$((SHLVL - 1))\[${RESET}\]")
+    fi
+    if [ "$RC" -ne 0 ]; then
+        POST_PWD_ARR+=("\[${LRED}\]${RC}\[${RESET}\]")
+    fi
+
+    if [ "${#POST_PWD_ARR}" -ge 1 ]; then
+        IFS=, POST_PWD="${BROWN}{${RESET}${POST_PWD_ARR[*]}${BROWN}}${RESET}"
+    fi
+    PS1="\[${LGREEN}\]\u\[$RESET\]@\[${LCYAN}\]\h\[$RESET\]:\[${LBLUE}\]\w\[${RESET}\]${POST_PWD}\$ "
+    if [ $(id -u) -eq 0 ]; then
+        PS1="\[${LRED}\]\u\[$RESET\]@\[${LCYAN}\]\h\[$RESET\]:\[${LBLUE}\]\w\[${RESET}\]${POST_PWD}# "
+    fi
+    unset POST_PWD_ARR POST_PWD SHOW_AT_SHLVL
+else
+    PS1='\u@\h:\w\$ '
+    if [ $(id -u) -eq 0 ]; then
+        PS1='\u@\h:\w# '
+    fi
+fi
+}
+export PS1
+
+EXTRA_PATHS=(~/.local/bin/ ~/go/bin/)
+for EXPA in "${EXTRA_PATHS[@]}"; do
+    PATH="${EXPA}:$PATH"
+done
+export PATH
+unset EXPA EXTRA_PATHS
+
+_prog_exists() { which "$1" >/dev/null 2>&1; }
+
+# detect tarbomb
+tarbomb(){ [[ $( tar tf "$1" | sed 's,^\./,,' | awk -F/ '{print $1}' | sort | uniq | wc -l ) -eq 1 ]] && echo "OK" || echo 'Tarbomb!'; }
+
+# -tt       = timestamps with microseconds
+# -f        = trace children
+# -y        = print file handle paths
+# -s 1024   = print first 1024 chars of strings
+alias ntrace='strace -ttfy -s 1024'
+alias diff=colordiff
+alias ssh-nokey='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+alias scp-nokey='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+# make GPG encrypted file shortcut
+alias make-gpg='gpg --compress-algo zlib --cipher-algo AES256 -c'
+
+# remote desktop shortcuts
+if _prog_exists xfreerdp; then
+rl() { xfreerdp +clipboard /cert-ignore /size:1920x1200 /d:LIB /u:colli372 /v:$1; }
+r() { xfreerdp +clipboard /cert-ignore /size:1680x1050 /d:LIB /u:colli372 /v:$1; }
+rs() { xfreerdp +clipboard /cert-ignore /size:1440x960 /d:LIB /u:colli372 /v:$1; }
+fi
+
+if _prog_exists xclip; then
+to_clip(){ xclip -selection clipboard; }
+from_clip(){ xclip -selection clipboard -o; }
+fi
+
+if _prog_exists terraform; then complete -C terraform terraform; fi

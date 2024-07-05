@@ -56,6 +56,7 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
         PS1="\[${LRED}\]\u\[$RESET\]@\[${LCYAN}\]\h\[$RESET\]:\[${LBLUE}\]\w\[${RESET}\]${POST_PWD}# "
     fi
     unset POST_PWD_ARR POST_PWD SHOW_AT_SHLVL
+    unset BLACK BLUE BROWN CYAN GRAY GREEN PURPLE RED WHITE YELLOW LBLUE LCYAN LGRAY LGREEN LPURPLE LRED BOLD RESET
 else
     PS1='\u@\h:\w\$ '
     if [ $(id -u) -eq 0 ]; then
@@ -89,6 +90,9 @@ alias scp-nokey='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 alias make-gpg='gpg --compress-algo zlib --cipher-algo AES256 -c'
 # why must you make me do this?
 alias sudo='sudo -E'
+if _prog_exists nmcli; then
+alias reset-the-mangler="sudo sh -c 'nmcli networking off; sleep 2; nmcli networking on'"
+fi
 
 # remote desktop shortcuts
 if _prog_exists xfreerdp; then

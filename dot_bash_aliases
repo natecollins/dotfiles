@@ -87,6 +87,8 @@ alias ssh-nokey='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 alias scp-nokey='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 # make GPG encrypted file shortcut
 alias make-gpg='gpg --compress-algo zlib --cipher-algo AES256 -c'
+# why must you make me do this?
+alias sudo='sudo -E'
 
 # remote desktop shortcuts
 if _prog_exists xfreerdp; then

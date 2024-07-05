@@ -1,0 +1,4 @@
+# Only prompt for confirmation on tab-complete over this amount
+set completion-query-items 400
+# To disable pager
+set page-completions off

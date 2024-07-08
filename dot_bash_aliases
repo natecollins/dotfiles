@@ -35,7 +35,7 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
         POST_PWD_ARR+=("\[${GRAY}\]ssh\[${RESET}\]")
     fi
     if [ -n "$VIRTUAL_ENV" ]; then
-        POST_PWD_ARR+=("\[${WHITE}\]$(basename \(${VIRTUAL_ENV}\))\[${RESET}\]")
+        POST_PWD_ARR+=("\[${WHITE}\]($(basename ${VIRTUAL_ENV}))\[${RESET}\]")
     fi
     if [ "$EUID" -eq 0 ]; then
         ((SHOW_AT_SHLVL += 1))

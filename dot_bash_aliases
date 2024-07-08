@@ -63,6 +63,15 @@ else
         PS1='\u@\h:\w# '
     fi
 fi
+
+# Set window title
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
 }
 export PS1
 
@@ -88,6 +97,7 @@ alias ssh-nokey='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 alias scp-nokey='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 # make GPG encrypted file shortcut
 alias make-gpg='gpg --compress-algo zlib --cipher-algo AES256 -c'
+alias vip='vim -p'
 # why must you make me do this?
 alias sudo='sudo -E'
 if _prog_exists nmcli; then

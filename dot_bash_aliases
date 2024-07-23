@@ -52,7 +52,7 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     fi
 
     if [ "${#POST_PWD_ARR}" -ge 1 ]; then
-        POST_PWD="${BROWN}{${RESET}$(IFS=,; echo "${POST_PWD_ARR[*]}")${BROWN}}${RESET}"
+        POST_PWD="\[${BROWN}\]{\[${RESET}\]$(IFS=,; echo "${POST_PWD_ARR[*]}")\[${BROWN}\]}\[${RESET}\]"
     fi
     PS1="\[${LGREEN}\]\u\[$RESET\]@\[${LCYAN}\]\h\[$RESET\]:\[${LBLUE}\]\w\[${RESET}\]${POST_PWD}\$ "
     if [ $(id -u) -eq 0 ]; then

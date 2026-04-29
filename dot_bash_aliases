@@ -1,7 +1,7 @@
 
 # history length; see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=500000
-HISTFILESIZE=1000000
+HISTFILESIZE=20000000
 
 PROMPT_COMMAND=_promptcommand
 
@@ -111,8 +111,8 @@ fi
 
 # remote desktop shortcuts
 if _prog_exists xfreerdp; then
-rl() { xfreerdp +clipboard /cert-ignore /size:1920x1200 /d:LIB /u:colli372 /v:$1; }
-r() { xfreerdp +clipboard /cert-ignore /size:1680x1050 /d:LIB /u:colli372 /v:$1; }
+rl() { xfreerdp +clipboard /cert-ignore /size:1920x1200 /scale:180 /d:LIB /u:colli372 /v:$1; }
+r() { xfreerdp +clipboard /cert-ignore /size:1680x1050 /scale:140 /d:LIB /u:colli372 /v:$1; }
 rs() { xfreerdp +clipboard /cert-ignore /size:1440x960 /d:LIB /u:colli372 /v:$1; }
 fi
 

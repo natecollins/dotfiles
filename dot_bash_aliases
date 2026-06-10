@@ -5,6 +5,9 @@ HISTFILESIZE=20000000
 
 PROMPT_COMMAND=_promptcommand
 
+# Ignore certain suffixes when doing file tab-complete
+export FIGNORE=.egg-info:__pycache__
+
 _promptcommand() {
 declare RC=$?
 # If color prompt supported
@@ -105,6 +108,7 @@ alias vip='vim -p'
 alias sudo='sudo -E'
 alias mtd='cd $(mktemp -d)'
 alias seppuku='kill -9 $$'
+alias tree='tree --gitignore'
 if _prog_exists nmcli; then
 alias reset-the-mangler="sudo sh -c 'nmcli networking off; sleep 2; nmcli networking on'"
 fi

@@ -8,6 +8,9 @@ PROMPT_COMMAND=_promptcommand
 # Ignore certain suffixes when doing file tab-complete
 export FIGNORE=.egg-info:__pycache__
 
+# Have tree ignore dump stuff
+alias tree='tree -I ".git|__pycache__|*.egg-info"'
+
 _promptcommand() {
 declare RC=$?
 # If color prompt supported

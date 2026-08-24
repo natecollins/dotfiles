@@ -7,3 +7,7 @@
 --ignore-file=match:/.*\.cache$/
 --ignore-dir=.phpstan_cache
 --ignore-dir=__pycache__
+# I don't care about package manager files!
+--ignore-dir=bundle
+--ignore-dir=env
+--ignore-dir=vendor
